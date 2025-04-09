@@ -6,9 +6,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
 
     steps:
       - name: Checkout code
@@ -20,11 +17,6 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org/'
           cache: 'pnpm'
-
-      # - name: Install pnpm
-      #   uses: pnpm/action-setup@v4
-      #   with:
-      #     version: 10
 
       - name: Install dependencies
         run: pnpm install
