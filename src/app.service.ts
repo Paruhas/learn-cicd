@@ -10,7 +10,6 @@ export class AppService {
     if (username !== 'admin' || password !== process.env.PASSWORD) {
       return 'Login failed';
     }
-
     return 'Login success';
   }
 }
