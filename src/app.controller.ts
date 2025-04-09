@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { loginReqDto } from './dto/login.dto';
 
 @Controller()
 export class AppController {
@@ -11,7 +12,7 @@ export class AppController {
   }
 
   @Post()
-  login(@Body() body: { username: string; password: string }) {
+  login(@Body() body: loginReqDto) {
     const { username, password } = body;
     return this.appService.login(username, password);
   }
