@@ -26,10 +26,11 @@ COPY . .
 # Build the NestJS application
 RUN pnpm build
 
-# FROM base AS release
-# WORKDIR /app
+FROM base AS release
+WORKDIR /app
 
 # COPY --from=prod-deps /app .
+COPY --from=deps /app .
 COPY --from=build /app/dist ./dist
 
 # Expose the port that your NestJS app runs on

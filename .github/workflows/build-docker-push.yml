@@ -1,14 +1,15 @@
 name: build and push docker image
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
+on:
+  #   push:
+  #     branches:
+  #       - main
+  #   pull_request:
+  #     branches:
+  #       - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-image-dockerhub:
     name: Build
     permissions:
       contents: write

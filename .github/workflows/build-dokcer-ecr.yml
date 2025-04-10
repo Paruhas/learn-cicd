@@ -14,7 +14,7 @@ env:
   # ECR_CLUSTER: ${{ vars.ECR_CLUSTER }}\
 
 jobs:
-  build:
+  build-aws:
     name: Build
     permissions:
       contents: write

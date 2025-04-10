@@ -1,14 +1,15 @@
 name: build in github
-# on:
-#   push:
-#     branches:
-#       - close
-#   pull_request:
-#     branches:
-#       - close
+on:
+  #   push:
+  #     branches:
+  #       - close
+  #   pull_request:
+  #     branches:
+  #       - close
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-github:
     name: Build
     permissions:
       contents: write
