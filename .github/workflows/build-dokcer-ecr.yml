@@ -11,7 +11,8 @@ env:
   # Setting an environment variable with the value of a configuration variable
   ECR_IMAGE: ${{ vars.ECR_IMAGE }}
   AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
-  # ECR_CLUSTER: ${{ vars.ECR_CLUSTER }}
+  # ECR_CLUSTER: ${{ vars.ECR_CLUSTER }}\
+  ECR_REGISTRY: ${{ steps.login.outputs.registry }} # จะถูกกำหนดหลังจาก login สำเร็จ
 
 jobs:
   build:

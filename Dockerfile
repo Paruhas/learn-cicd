@@ -30,7 +30,7 @@ RUN pnpm build
 # WORKDIR /app
 
 # COPY --from=prod-deps /app .
-# COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist ./dist
 
 # Expose the port that your NestJS app runs on
 EXPOSE 3000
