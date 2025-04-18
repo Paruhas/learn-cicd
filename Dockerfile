@@ -1,45 +1,29 @@
-# Multi-stage builds
-
-# Use an official Node.js runtime as a parent image
-FROM node:22-alpine AS base
+#Dockerfile
+FROM public.ecr.aws/lambda/nodejs:22 AS base
 
 FROM base AS pnpm
 RUN npm install -g pnpm
 
-FROM pnpm AS deps
-# Set the working directory
+FROM pnpm AS dependencies
+RUN mkdir -p /app
 WORKDIR /app
-# Copy package.json and package-lock.json (or yarn.lock) before other files
-# Leverage Docker cache to save time on dependency installation
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-# Install dependencies
+COPY package.json .
+COPY pnpm-lock.yaml .
 RUN pnpm install --frozen-lockfile
 
-# FROM deps AS prod-deps
-# WORKDIR /app
-# COPY --from=deps /app .
-# COPY ./prisma ./prisma
-# RUN pnpm prisma generate
-# RUN pnpm prune --prod
-
-FROM deps AS build
+FROM dependencies AS build
 WORKDIR /app
-# Copy the rest of your application code to the container
 COPY . .
-# RUN npx prisma generate
-# Build the NestJS application
 RUN pnpm build
 
-FROM base AS release
+FROM base AS deploy
 WORKDIR /app
+ARG BUILD_ENV=production
+RUN echo '==== BUILD ' ${BUILD_ENV} ' ENV ===='
+ENV NODE_ENV=${BUILD_ENV}
 
-# COPY --from=prod-deps /app .
-COPY --from=deps /app .
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist ${LAMBDA_TASK_ROOT}/dist
+COPY --from=build /app/node_modules ${LAMBDA_TASK_ROOT}/node_modules
 
-# Expose the port that your NestJS app runs on
-EXPOSE 3000
+CMD ["dist/lambda.handler" ]
 
-# Define the command to start the application
-CMD [ "node", "dist/main.js" ]
