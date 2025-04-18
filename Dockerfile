@@ -19,12 +19,15 @@ RUN pnpm install --frozen-lockfile
 # FROM deps AS prod-deps
 # WORKDIR /app
 # COPY --from=deps /app .
+# COPY ./prisma ./prisma
+# RUN pnpm prisma generate
 # RUN pnpm prune --prod
 
 FROM deps AS build
 WORKDIR /app
 # Copy the rest of your application code to the container
 COPY . .
+# RUN npx prisma generate
 # Build the NestJS application
 RUN pnpm build
 
