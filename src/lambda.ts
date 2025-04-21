@@ -1,13 +1,13 @@
 //lambda.ts
 import { configure as serverlessExpress } from '@codegenie/serverless-express';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-
 import {
   APIGatewayEvent as AWSAPIGatewayEvent,
   Context as AWSContext,
   Handler as AWSLambdaHandler,
 } from 'aws-lambda';
+
+import { AppModule } from './app.module';
 
 let cachedServer: AWSLambdaHandler;
 
